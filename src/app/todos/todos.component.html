@@ -1,0 +1,25 @@
+<h1>Add new task</h1>
+<form (ngSubmit) = "onSubmit(f)" #f="ngForm" class="form">
+  <mat-form-field>
+    <input matInput placeholder="New todo" name="todo" ngModel required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerFrom" placeholder="Start date" name="dateFrom" ngModel required>
+    <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+    <mat-datepicker #pickerFrom></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerTo" placeholder="End date" name="dateTo" ngModel required>
+    <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+    <mat-datepicker #pickerTo></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Priority" name="p" ngModel>
+      <mat-option *ngFor="let p of priority" [value]="p">
+        {{p}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
+  <button type="submit" mat-raised-button color="primary">Submit</button>
+</form>

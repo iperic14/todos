@@ -1,0 +1,12 @@
+.header {
+  height: 70px;
+  background-color: #1e678c;
+  color: white;
+  font-family: cursive;
+  line-height: 70px;
+  font-size: 2em;
+}
+
+span {
+  margin-left: 1em;
+}
