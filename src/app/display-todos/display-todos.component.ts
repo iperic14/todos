@@ -77,4 +77,8 @@ export class DisplayTodosComponent implements OnInit {
     };
     this.todosService.setCompleted(this.id, newTodo);
   }
+
+  onEdit(el: Todos) {
+    this.todosService.editSub.next(el);
+  }
 }

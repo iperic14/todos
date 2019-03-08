@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { TodosService } from '../todos.service';
+import { Todos } from '../todos.model';
 
 
 @Component({
@@ -12,19 +13,19 @@ export class TodosComponent implements OnInit {
   constructor(private todosService: TodosService) { }
   priority: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   id: number;
+  @ViewChild('f') form: NgForm;
   ngOnInit() {
-    // this.todosService.getTodos().subscribe((data) => {
-    //   const idArr = [];
-    //   data.forEach((el) => {
-    //     idArr.push(el.id);
-    //   });
-    //   idArr.sort();
-    //   if (idArr.length === 0) {
-    //     this.id = 1;
-    //   } else {
-    //     this.id = idArr.length + 1;
-    //   }
-    // });
+    this.todosService.editSubObs.subscribe((todo: Todos) => {
+      const newData = {
+        todo: todo.todo,
+        dateFrom: todo.dateFrom,
+        dateTo: todo.dateTo,
+        priority: todo.priority
+      };
+      setTimeout(() => {
+        this.form.setValue(newData);
+      }, 10);
+    });
   }
   onSubmit(formData: NgForm) {
     if (formData.valid) {
@@ -32,7 +33,7 @@ export class TodosComponent implements OnInit {
          todo: formData.value.todo,
          dateFrom: formData.value.dateFrom,
          dateTo: formData.value.dateTo,
-         priority: formData.value.p,
+         priority: formData.value.priority,
          done: false};
       this.todosService.addTodo(newData);
       this.id++;
