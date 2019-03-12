@@ -12,7 +12,7 @@ input {
 
 .mat-form-field {
   margin-right: 10px;
-  width: 24%;
+  /* width: 19%; */
 }
 
 button {
@@ -22,4 +22,28 @@ button {
 
 h1 {
   text-align: center;
+}
+
+textarea {
+  height: 18px;
+}
+
+.todo-input {
+  width: 25%;
+}
+
+.dFrom-input {
+  width: 15%;
+}
+
+.dTo-input {
+  width: 15%;
+}
+
+.prio-input {
+  width: 12%;
+}
+
+.desc-input {
+  width: 28%;
 }

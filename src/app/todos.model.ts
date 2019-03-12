@@ -7,5 +7,6 @@ export interface Todos {
   dateTo?: Timestamp;
   priority?: number;
   done?: Boolean;
+  description?: string;
   // checked?: Boolean;
 }

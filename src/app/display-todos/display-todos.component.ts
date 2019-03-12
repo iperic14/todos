@@ -23,10 +23,12 @@ export class DisplayTodosComponent implements OnInit {
   selectedTodo: Todos;
   displayedColumns: string[] = ['task', 'dateFrom', 'dateTo', 'priority', 'done'];
   expandedElement: Todos | null;
+
   constructor(private todosService: TodosService) { }
 
   ngOnInit() {
     this.todosService.getTodos().subscribe((data: Todos[]) => {
+      data.sort((a, b) => b.priority - a.priority);
       this.todos = data.map((todos: Todos) => {
         const tt = todos.id;
         const kk = todos.todo;
@@ -34,8 +36,9 @@ export class DisplayTodosComponent implements OnInit {
         const nn = todos.dateTo.toDate();
         const dd = todos.priority;
         const pp = todos.done;
+        const cc = todos.description;
         // const cc = todos.checked;
-        const bb = {id: tt, todo: kk, dateFrom: mm, dateTo: nn, priority: dd, done: pp};
+        const bb = {id: tt, todo: kk, dateFrom: mm, dateTo: nn, priority: dd, done: pp, description: cc};
         return bb;
       });
 
@@ -44,7 +47,8 @@ export class DisplayTodosComponent implements OnInit {
 
   onSelect(e, row) {
     this.selectedTodo = row;
-    console.log(row);
+    this.todosService.getId(row.id);
+    // console.log(row);
     this.id = row.id;
     const parentArr = e.target.parentElement.parentElement.children;
 
@@ -73,12 +77,15 @@ export class DisplayTodosComponent implements OnInit {
       dateFrom: this.selectedTodo.dateFrom,
       dateTo: this.selectedTodo.dateTo,
       priority: this.selectedTodo.priority,
-      done: !this.selectedTodo.done
+      done: !this.selectedTodo.done,
+      description: this.selectedTodo.description
     };
-    this.todosService.setCompleted(this.id, newTodo);
+    this.todosService.setTodo(newTodo);
   }
 
   onEdit(el: Todos) {
+    // console.log(el);
     this.todosService.editSub.next(el);
+    this.todosService.editMode.next(true);
   }
 }

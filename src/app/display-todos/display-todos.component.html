@@ -37,7 +37,9 @@
           <button mat-raised-button class="btn-completed" (click)="onCompleted()">Completed</button>
           <button mat-raised-button class="btn-edit" (click)="onEdit(element)">Edit</button>
           <button mat-raised-button color="warn" (click)="onDelete()">Delete</button>
+
         </div>
+        <span>{{element.description}}</span>
       </div>
     </td>
   </ng-container>

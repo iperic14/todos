@@ -3,14 +3,19 @@ import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Timestamp } from '@firebase/firestore-types';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodosService {
-  editSub = new BehaviorSubject<Todos>({todo: '', dateFrom: null, dateTo: null, priority: null});
+  editSub = new BehaviorSubject<Todos>({todo: '', dateFrom: null, dateTo: null, priority: null, description: ''});
   editSubObs = this.editSub.asObservable();
+
+  editMode = new BehaviorSubject<boolean>(false);
+  editModeObs = this.editMode.asObservable();
+
+  id: string;
+
   todos: Observable<Todos[]>;
   private firestoreCollection: AngularFirestoreCollection<Todos>;
   constructor(private db: AngularFirestore) {
@@ -33,11 +38,16 @@ export class TodosService {
     return this.todos;
   }
 
-  setCompleted(id: string, todo: Todos) {
-    this.firestoreCollection.doc(id).set(todo);
+  setTodo(todo: Todos) {
+    this.firestoreCollection.doc(this.id).set(todo);
   }
   deleteTodo(id: string) {
     // console.log(id);
     this.db.collection('todos').doc(id).delete();
+  }
+
+  getId(id: string) {
+    this.id = id;
+    // console.log(id);
   }
 }
